@@ -14,7 +14,7 @@ public class Calculator {
     public static void main(String[] args) {
         Calculator calculator = new Calculator();
 
-        System.out.println("Application Maven ENI");
+        System.out.println("Application Maven ENI - CI/CD Automatique");
         System.out.println("2 + 3 = " + calculator.add(2, 3));
     }
 }
