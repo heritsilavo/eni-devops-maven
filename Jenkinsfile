@@ -1,11 +1,9 @@
 
 pipeline {
-    agent {
-        docker {
-            image 'maven:3.9-eclipse-temurin-17'
-            args '-v maven-cache:/root/.m2'
-            reuseNode true
-        }
+    agent any
+
+    tools {
+        maven 'Maven3'
     }
 
     stages {
@@ -44,10 +42,6 @@ pipeline {
             archiveArtifacts artifacts: 'target/*.jar',
                              fingerprint: true
             echo 'Pipeline Maven termine avec succes !'
-        }
-
-        failure {
-            echo 'Echec du pipeline Maven.'
         }
     }
 }
