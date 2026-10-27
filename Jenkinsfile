@@ -44,6 +44,36 @@ pipeline {
             }
         }
 
+        
+        stage('Docker Push') {
+            steps {
+                withCredentials([
+                    usernamePassword(
+                        credentialsId: 'dockerhub-credentials',
+                        usernameVariable: 'DOCKERHUB_USER',
+                        passwordVariable: 'DOCKERHUB_TOKEN'
+                    )
+                ]) {
+                    sh '''
+                        set -eu
+
+                        IMAGE="$DOCKERHUB_USER/eni-maven-app:1.0"
+
+                        docker tag eni-maven-app:1.0 "$IMAGE"
+
+                        set +x
+                        echo "$DOCKERHUB_TOKEN" | docker login \
+                            -u "$DOCKERHUB_USER" \
+                            --password-stdin
+
+                        docker push "$IMAGE"
+                        docker logout
+                    '''
+                }
+            }
+        }
+
+
     }
 
     post {
