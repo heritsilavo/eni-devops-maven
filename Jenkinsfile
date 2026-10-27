@@ -30,6 +30,20 @@ pipeline {
                 sh 'mvn -B -DskipTests package'
             }
         }
+
+        
+        stage('Docker Build') {
+            steps {
+                sh 'docker build -t eni-maven-app:1.0 .'
+            }
+        }
+
+        stage('Docker Test') {
+            steps {
+                sh 'docker run --rm eni-maven-app:1.0'
+            }
+        }
+
     }
 
     post {
